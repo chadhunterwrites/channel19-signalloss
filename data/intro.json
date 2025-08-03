@@ -1,36 +1,52 @@
 {
   "scenes": {
     "start": {
-      "text": "You’re in your apartment. 3:19AM. The TV is on. You don’t own a TV.",
+      "text": "You wake up, but nothing around you feels like waking.\n\n3:19AM. The clock blinks even though you don’t remember owning one. The walls hum with quiet static.\n\nThe television is on.\n\nIt sits at the end of the room, flickering in low pulses of light, casting shadows that don't match the furniture. You don’t own a TV. You never have.\n\nThere’s something glinting beside a half-crushed cereal box on the floor. It looks like a ring.\n\nSomewhere, a phone rings once. Then silence.",
+      "reminder": "The static bleeds into the air. The carpet smells like sugar and ozone.",
+      "flavor": "You feel like you’ve walked into a memory that never aired.",
       "options": {
-        "look": "scene1",
-        "turn on tv": "scene2",
-        "answer phone": "scene3"
+        "look": "sceneLook",
+        "turn on tv": "sceneTV",
+        "answer phone": "scenePhone"
       }
     },
-    "scene1": {
-      "text": "It’s dark. Empty cereal boxes on the table. VHS tapes scattered. You feel like something is watching from the static.",
+
+    "sceneLook": {
+      "text": "Dust moves through the light like it's underwater.\n\nThe cereal boxes are all from shows you barely remember. One is ripped open—shredded from the inside.\n\nThere’s a decoder ring on the carpet. You remember it from a cartoon you used to draw… but it looks older. Dirtier.\n\nNext to it, a shoebox labeled \"SHOW IDEAS\" hums faintly when you lean close.",
+      "reminder": "The decoder ring pulses when you breathe too loud.",
+      "flavor": "Everything here was left behind. Maybe even you.",
       "options": {}
     },
-    "scene2": {
-      "text": "The screen flickers. Captain Chomp is gnawing on a mailbox. He stops and stares directly at you.",
+
+    "sceneTV": {
+      "text": "The screen flickers.\n\nA familiar mascot—Captain Chomp—chews through a mailbox. His jaw clicks unnaturally. The animation stutters.\n\nHe stops mid-bite. Looks directly at the screen.\nSmiles.",
+      "image": "captain_chomp_glitch.jpg",
+      "sound": "glitch_burst.mp3",
+      "jumpscare": true,
+      "flavor": "You used to draw him. He never used to blink.",
       "options": {}
     },
-    "scene3": {
-      "text": "A distorted voice whispers through the speaker: “I’m still in the Vault. Do you remember Captain Chomp?”",
+
+    "scenePhone": {
+      "text": "A distorted voice crackles through the line:\n\n\"You’re seeing it again, aren’t you? Good. We’re almost tuned.\"\n\nThe voice slows, distorts—then continues in a whisper:\n\n\"I’m still in the Vault. Do you remember Captain Chomp?\"",
+      "reminder": "The line cuts off. But your phone isn’t a landline.",
+      "flavor": "You used to talk like that in play therapy.",
       "options": {}
     },
+
     "sceneDecoderUnlock": {
-      "text": "You grip the decoder ring. It vibrates in your hand. You press it against a cereal box.\n\nThe box clicks. Opens. Inside is a VHS tape. No label. No logo.",
+      "text": "You grip the decoder ring. It vibrates in your palm like a heartbeat.\n\nYou hold it to the cereal box. Something inside shifts.\n\nThe box unfolds—too precisely—revealing a black VHS tape. No label. No dust.",
       "image": "tape_unlabeled.png",
       "sound": "vhs_load.mp3",
-      "flavor": "The room feels colder. The static says your name.",
+      "flavor": "The static on the TV grows warmer. Like breath.",
       "options": {
-        "insert tape": "sceneTape"
+        "insert tape": "sceneTape",
+        "play tape": "sceneTape"
       }
     },
+
     "sceneTape": {
-      "text": "You insert the tape. It starts immediately.\n\nA voiceover: *\"We were never off air…\"*\n\nA cartoon mascot stares at the camera. \"Let’s try that again!\"",
+      "text": "You insert the tape.\n\nThe screen cuts to black.\nThen:\n\n*“We were never off air.”*\n\nA bright cartoon mascot waves. His face begins to glitch. It doesn’t stop.\n\nHe says, cheerfully: \"Let’s try that again!\"",
       "image": "static_reset.jpg",
       "sound": "glitch_burst.mp3",
       "jumpscare": true,
@@ -39,8 +55,9 @@
         "stand up": "sceneFakeEnd"
       }
     },
+
     "sceneFakeEnd": {
-      "text": "You take a breath.\n\nThe static is gone. The screen is dark. You’re safe.\n\nYou’re awake.",
+      "text": "You take a deep breath.\n\nThe screen is black. The apartment is quiet.\n\nYou’re safe. You’re awake. You’re home.\n\nBut your feet feel heavy.",
       "image": "tv_static_loop.jpg",
       "sound": "tape_rewind.mp3",
       "flavor": "You can almost hear birds. Morning air. You haven’t felt that in years.",
@@ -48,12 +65,13 @@
         "stand up": "sceneTwist"
       }
     },
+
     "sceneTwist": {
-      "text": "You stand.\n\nBut your body stays still.\n\nThe TV flickers back on. It shows your room. The same toys. The same glow.\n\nBut that isn’t your face in the reflection.",
+      "text": "You stand.\n\nBut your reflection doesn’t.\n\nThe TV turns on again. It shows your room. Your couch. Your ring. Your face.\n\nOnly… your face is wearing a mask.",
       "image": "mask_closeup.jpg",
       "sound": "tv_static_screech.mp3",
       "jumpscare": true,
-      "flavor": "Something wears your memory like a mask.",
+      "flavor": "Something is watching from behind your eyes.",
       "options": {}
     }
   }
