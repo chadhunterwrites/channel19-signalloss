@@ -1,1 +1,25 @@
+{
+  "scenes": {
+    "start": {
+      "text": "You’re in your apartment. 3:19AM. The TV is on. You don’t own a TV.",
+      "options": {
+        "look": "scene1",
+        "turn on tv": "scene2",
+        "answer phone": "scene3"
+      }
+    },
+    "scene1": {
+      "text": "It’s dark. Empty cereal boxes on the table. VHS tapes scattered. You feel like something is watching from the static.",
+      "options": {}
+    },
+    "scene2": {
+      "text": "The screen flickers. Captain Chomp is gnawing on a mailbox. He stops and stares directly at you.",
+      "options": {}
+    },
+    "scene3": {
+      "text": "A distorted voice whispers through the speaker: “I’m still in the Vault. Do you remember Captain Chomp?”",
+      "options": {}
+    }
+  }
+}
 
