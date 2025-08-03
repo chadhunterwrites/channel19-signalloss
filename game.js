@@ -1,37 +1,64 @@
 const output = document.getElementById("game-output");
 const input = document.getElementById("command-input");
 
+let currentScene = "start";
+let gameData = {};
+
+// Load the intro scene JSON
+fetch("data/intro.json")
+  .then((res) => res.json())
+  .then((data) => {
+    gameData = data;
+    renderScene(currentScene);
+  })
+  .catch((err) => {
+    appendOutput("The signal... failed to tune in. (Error loading story data)");
+    console.error(err);
+  });
+
+// Handle user input
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    const command = input.value.trim();
+    const command = input.value.trim().toLowerCase();
     input.value = "";
     processCommand(command);
   }
 });
 
+// Process the player's typed command
 function processCommand(cmd) {
   appendOutput(`> ${cmd}`);
+  const scene = gameData.scenes[currentScene];
 
-  switch (cmd.toLowerCase()) {
-    case "look":
-    case "look around":
-      appendOutput("You're in your apartment. 3:19AM. The TV is on, but... you don’t own a TV.");
-      break;
-    case "turn on tv":
-    case "watch tv":
-      appendOutput("The screen flickers. Static hums. A cartoon mascot—*Captain Chomp*—is chewing through a mailbox.");
-      break;
-    case "answer phone":
-      appendOutput("A voice crackles: “I’m still in the Vault. Do you remember Captain Chomp?”");
-      break;
-    case "help":
-      appendOutput("Try commands like: look, turn on tv, answer phone, use [item], open [object]");
-      break;
-    default:
-      appendOutput("The signal distorts. That doesn’t seem to do anything… yet.");
+  if (!scene || !scene.options) {
+    appendOutput("You hear a low buzz, like the channel isn't tuned right.");
+    return;
+  }
+
+  // Normalize and match commands to scene options
+  const options = scene.options;
+  if (options[cmd]) {
+    currentScene = options[cmd];
+    renderScene(currentScene);
+  } else {
+    appendOutput("The static flickers. That didn’t seem to do anything…");
   }
 }
 
+// Render the scene text on screen
+function renderScene(sceneKey) {
+  const scene = gameData.scenes[sceneKey];
+
+  if (!scene) {
+    appendOutput("[SCENE MISSING] The Vault doesn’t recognize this memory.");
+    return;
+  }
+
+  appendOutput("\n" + scene.text);
+}
+
+// Utility to append output
 function appendOutput(text) {
   output.textContent += "\n" + text;
+  output.scrollTop = output.scrollHeight;
 }
