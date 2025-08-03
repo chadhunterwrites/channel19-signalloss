@@ -1,0 +1,9 @@
+{
+  "items": [
+    {
+      "name": "decoder ring",
+      "effect": "The ring pulses faintly, like it’s reacting to a forgotten frequency.",
+      "triggerScene": "sceneDecoderUnlock"
+    }
+  ]
+}
