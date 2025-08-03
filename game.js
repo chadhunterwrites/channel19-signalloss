@@ -3,20 +3,24 @@ const input = document.getElementById("command-input");
 
 let currentScene = "start";
 let gameData = {};
+let inventory = [];
+let vaultDecay = 0;
 
-// Load the intro scene JSON
-fetch("data/intro.json")
-  .then((res) => res.json())
-  .then((data) => {
-    gameData = data;
+// Load scene data and (later) inventory
+Promise.all([
+  fetch("data/intro.json").then((res) => res.json()),
+  fetch("data/inventory.json").then((res) => res.json())
+])
+  .then(([sceneData, inventoryData]) => {
+    gameData = sceneData;
+    inventory = inventoryData.items;
     renderScene(currentScene);
   })
   .catch((err) => {
-    appendOutput("The signal... failed to tune in. (Error loading story data)");
+    appendOutput("Signal disrupted... (failed to load files)");
     console.error(err);
   });
 
-// Handle user input
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const command = input.value.trim().toLowerCase();
@@ -25,40 +29,120 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-// Process the player's typed command
 function processCommand(cmd) {
   appendOutput(`> ${cmd}`);
+
   const scene = gameData.scenes[currentScene];
+  const options = scene.options || {};
 
-  if (!scene || !scene.options) {
-    appendOutput("You hear a low buzz, like the channel isn't tuned right.");
-    return;
-  }
+  // Try fuzzy match
+  const matchedCommand = findMatchingCommand(cmd, options);
 
-  // Normalize and match commands to scene options
-  const options = scene.options;
-  if (options[cmd]) {
-    currentScene = options[cmd];
+  if (matchedCommand) {
+    const nextSceneKey = options[matchedCommand];
+    currentScene = nextSceneKey;
     renderScene(currentScene);
+  } else if (cmd.startsWith("use ")) {
+    const itemName = cmd.substring(4);
+    useItem(itemName);
+  } else if (cmd === "look" || cmd === "look around") {
+    renderScene(currentScene, true); // Re-show scene
+  } else if (cmd === "inventory") {
+    showInventory();
   } else {
-    appendOutput("The static flickers. That didn’t seem to do anything…");
+    appendOutput("The static crackles. That doesn't work... or it shouldn't.");
   }
 }
 
-// Render the scene text on screen
-function renderScene(sceneKey) {
+function findMatchingCommand(cmd, options) {
+  const keys = Object.keys(options);
+  return keys.find(key => cmd.includes(key)) || null;
+}
+
+function renderScene(sceneKey, isReLook = false) {
   const scene = gameData.scenes[sceneKey];
 
   if (!scene) {
-    appendOutput("[SCENE MISSING] The Vault doesn’t recognize this memory.");
+    appendOutput("[ERROR: Scene not found. Something is wrong with the tape.]");
     return;
   }
 
+  if (!isReLook) {
+    handleSceneEffects(scene);
+  }
+
   appendOutput("\n" + scene.text);
+
+  if (scene.reminder) {
+    appendOutput(scene.reminder);
+  }
+
+  if (scene.flavor) {
+    appendOutput(`\n[${scene.flavor}]`);
+  }
 }
 
-// Utility to append output
-function appendOutput(text) {
-  output.textContent += "\n" + text;
-  output.scrollTop = output.scrollHeight;
+function handleSceneEffects(scene) {
+  if (scene.image) {
+    showImage(scene.image);
+  }
+  if (scene.sound) {
+    playSound(scene.sound);
+  }
+  if (scene.jumpscare) {
+    triggerJumpscare();
+  }
 }
+
+function showImage(filename) {
+  const img = document.createElement("img");
+  img.src = `assets/images/${filename}`;
+  img.classList.add("jumpscare");
+  document.body.appendChild(img);
+
+  setTimeout(() => {
+    img.remove();
+  }, 1500);
+}
+
+function playSound(filename) {
+  const audio = new Audio(`assets/audio/${filename}`);
+  audio.play();
+}
+
+function triggerJumpscare() {
+  appendOutput("\n[⚠ JUMPSCARE ACTIVATED]");
+  vaultDecay += 1;
+}
+
+function useItem(name) {
+  const item = inventory.find(i => i.name.toLowerCase() === name.toLowerCase());
+
+  if (!item) {
+    appendOutput("You don’t have that. Or maybe it’s lost…");
+    return;
+  }
+
+  if (item.effect) {
+    appendOutput(item.effect);
+    if (item.triggerScene) {
+      currentScene = item.triggerScene;
+      renderScene(currentScene);
+    }
+  } else {
+    appendOutput("You fiddle with it. It feels... familiar. But nothing happens.");
+  }
+}
+
+function showInventory() {
+  if (inventory.length === 0) {
+    appendOutput("Your pockets are empty. Or maybe you forgot what was in them.");
+    return;
+  }
+
+  appendOutput("You carry:");
+  inventory.forEach(item => appendOutput("- " + item.name));
+}
+
+function appendOutput(text) {
+  output.textCo
