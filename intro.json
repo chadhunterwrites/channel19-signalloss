@@ -28,7 +28,7 @@
     },
 
     "scenePhone": {
-      "text": "You press play. A voicemail crackles: \n\n\"Hey. Hey—if you’re hearing this, you’re waking up too. I’m still in the Vault. Do you remember Captain Chomp?\"",
+      "text": "You press play. A voicemail crackles:\n\n\"Hey. Hey—if you’re hearing this, you’re waking up too. I’m still in the Vault. Do you remember Captain Chomp?\"",
       "reminder": "The voicemail loops… *“still in the Vault… the Vault…”*",
       "flavor": "The voice sounds like a friend you forgot. Or were forced to.",
       "options": {}
