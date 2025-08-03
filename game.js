@@ -145,4 +145,6 @@ function showInventory() {
 }
 
 function appendOutput(text) {
-  output.textCo
+  output.textContent += "\n" + text;
+  output.scrollTop = output.scrollHeight;
+}
