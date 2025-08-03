@@ -1,5 +1,56 @@
-"image": "captain_chomp_glitch.jpg",
-"sound": "tape_rewind.mp3",
-"jumpscare": true,
-"reminder": "The decoder ring glints on the table.",
-"flavor": "You feel like something... *remembers you*."
+{
+  "scenes": {
+    "start": {
+      "text": "You wake up. 3:19AM.\n\nYour apartment is dark, but the television is on.\n\nYou don’t own a TV.",
+      "reminder": "A faint light flickers from the corner. Something glints on the table.",
+      "flavor": "You feel watched, like something remembered you first.",
+      "options": {
+        "look": "scene1",
+        "turn on tv": "scene2",
+        "answer phone": "scene3"
+      }
+    },
+
+    "scene1": {
+      "text": "You look around the room.\n\nEmpty cereal boxes. A shoebox full of toys. A glowing decoder ring. The static hum gets louder.",
+      "reminder": "The decoder ring pulses faintly.",
+      "flavor": "You remember… not owning these boxes.",
+      "options": {}
+    },
+
+    "scene2": {
+      "text": "You approach the TV. Static clears for a second.\n\nA mascot gnaws on a mailbox. He stops. Looks at you.",
+      "image": "captain_chomp_glitch.jpg",
+      "sound": "tape_rewind.mp3",
+      "flavor": "You used to draw him. But he wasn’t this… sharp.",
+      "jumpscare": true,
+      "options": {}
+    },
+
+    "scene3": {
+      "text": "You pick up the phone. A voicemail plays.\n\n'Hey... hey, I think you're waking up too. I’m still in the Vault. Do you remember Captain Chomp?'",
+      "reminder": "The voicemail repeats, warbled. '…still in the Vault… the Vault…'",
+      "flavor": "The voice sounds like a friend you never had.",
+      "options": {}
+    },
+
+    "sceneDecoderUnlock": {
+      "text": "The decoder ring hums louder. You press it to the cereal box.\n\nThe box… opens itself. Inside is a tape. It has no label.",
+      "image": "tape_unlabeled.png",
+      "sound": "vhs_load.mp3",
+      "flavor": "The room feels colder. The static whispers a name you forgot.",
+      "options": {
+        "insert tape": "sceneTape"
+      }
+    },
+
+    "sceneTape": {
+      "text": "You insert the tape into a VCR you don’t remember owning.\n\nThe screen goes black. Then: a cartoon mascot appears and says—\n\n“Let’s try that again.”",
+      "image": "static_reset.jpg",
+      "sound": "glitch_burst.mp3",
+      "jumpscare": true,
+      "flavor": "You’ve seen this episode before.\nBut you *weren’t* the viewer.",
+      "options": {}
+    }
+  }
+}
