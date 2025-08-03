@@ -56,7 +56,16 @@ function processCommand(cmd) {
 
 function findMatchingCommand(cmd, options) {
   const keys = Object.keys(options);
-  return keys.find(key => cmd.includes(key)) || null;
+  for (const key of keys) {
+    // Exact match
+    if (cmd === key) return key;
+
+    // Word match
+    const cmdWords = cmd.split(" ");
+    const keyWords = key.split(" ");
+    if (keyWords.every(word => cmdWords.includes(word))) return key;
+  }
+  return null;
 }
 
 function renderScene(sceneKey, isReLook = false) {
@@ -148,3 +157,4 @@ function appendOutput(text) {
   output.textContent += "\n" + text;
   output.scrollTop = output.scrollHeight;
 }
+
