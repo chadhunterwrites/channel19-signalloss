@@ -6,7 +6,7 @@ let gameData = {};
 let inventory = [];
 let vaultDecay = 0;
 
-// Load scene data and (later) inventory
+// Load scene data and inventory
 Promise.all([
   fetch("data/intro.json").then((res) => res.json()),
   fetch("data/inventory.json").then((res) => res.json())
@@ -35,8 +35,13 @@ function processCommand(cmd) {
   const scene = gameData.scenes[currentScene];
   const options = scene.options || {};
 
-  // Try fuzzy match
+  // Debugging info
+  console.log("CMD:", cmd);
+  console.log("CURRENT SCENE:", currentScene);
+  console.log("AVAILABLE OPTIONS:", Object.keys(options));
+
   const matchedCommand = findMatchingCommand(cmd, options);
+  console.log("MATCHED:", matchedCommand);
 
   if (matchedCommand) {
     const nextSceneKey = options[matchedCommand];
@@ -60,7 +65,7 @@ function findMatchingCommand(cmd, options) {
     // Exact match
     if (cmd === key) return key;
 
-    // Word match
+    // Word match (flexible fuzzy match)
     const cmdWords = cmd.split(" ");
     const keyWords = key.split(" ");
     if (keyWords.every(word => cmdWords.includes(word))) return key;
@@ -73,8 +78,11 @@ function renderScene(sceneKey, isReLook = false) {
 
   if (!scene) {
     appendOutput("[ERROR: Scene not found. Something is wrong with the tape.]");
+    console.warn("Scene missing:", sceneKey);
     return;
   }
+
+  console.log("Rendering scene:", sceneKey);
 
   if (!isReLook) {
     handleSceneEffects(scene);
@@ -157,4 +165,3 @@ function appendOutput(text) {
   output.textContent += "\n" + text;
   output.scrollTop = output.scrollHeight;
 }
-
