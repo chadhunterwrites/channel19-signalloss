@@ -33,7 +33,38 @@ function processCommand(cmd) {
   appendOutput(`> ${cmd}`);
 
   const scene = gameData.scenes[currentScene];
+
+  if (!scene) {
+    appendOutput("[ERROR] The scene is missing. Are you caught between signals?");
+    console.error("Scene not found:", currentScene);
+    return;
+  }
+
   const options = scene.options || {};
+
+  console.log("CMD:", cmd);
+  console.log("CURRENT SCENE:", currentScene);
+  console.log("AVAILABLE OPTIONS:", Object.keys(options));
+
+  const matchedCommand = findMatchingCommand(cmd, options);
+  console.log("MATCHED:", matchedCommand);
+
+  if (matchedCommand) {
+    const nextSceneKey = options[matchedCommand];
+    currentScene = nextSceneKey;
+    renderScene(currentScene);
+  } else if (cmd.startsWith("use ")) {
+    const itemName = cmd.substring(4);
+    useItem(itemName);
+  } else if (cmd === "look" || cmd === "look around") {
+    renderScene(currentScene, true); // Re-show scene
+  } else if (cmd === "inventory") {
+    showInventory();
+  } else {
+    appendOutput("The static crackles. That doesn't work... or it shouldn't.");
+  }
+}
+
 
   // Debugging info
   console.log("CMD:", cmd);
@@ -165,3 +196,4 @@ function appendOutput(text) {
   output.textContent += "\n" + text;
   output.scrollTop = output.scrollHeight;
 }
+
