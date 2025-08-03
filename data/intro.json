@@ -19,7 +19,42 @@
     "scene3": {
       "text": "A distorted voice whispers through the speaker: “I’m still in the Vault. Do you remember Captain Chomp?”",
       "options": {}
+    },
+    "sceneDecoderUnlock": {
+      "text": "You grip the decoder ring. It vibrates in your hand. You press it against a cereal box.\n\nThe box clicks. Opens. Inside is a VHS tape. No label. No logo.",
+      "image": "tape_unlabeled.png",
+      "sound": "vhs_load.mp3",
+      "flavor": "The room feels colder. The static says your name.",
+      "options": {
+        "insert tape": "sceneTape"
+      }
+    },
+    "sceneTape": {
+      "text": "You insert the tape. It starts immediately.\n\nA voiceover: *\"We were never off air…\"*\n\nA cartoon mascot stares at the camera. \"Let’s try that again!\"",
+      "image": "static_reset.jpg",
+      "sound": "glitch_burst.mp3",
+      "jumpscare": true,
+      "flavor": "You’ve seen this episode before. But not from this side of the screen.",
+      "options": {
+        "stand up": "sceneFakeEnd"
+      }
+    },
+    "sceneFakeEnd": {
+      "text": "You take a breath.\n\nThe static is gone. The screen is dark. You’re safe.\n\nYou’re awake.",
+      "image": "tv_static_loop.jpg",
+      "sound": "tape_rewind.mp3",
+      "flavor": "You can almost hear birds. Morning air. You haven’t felt that in years.",
+      "options": {
+        "stand up": "sceneTwist"
+      }
+    },
+    "sceneTwist": {
+      "text": "You stand.\n\nBut your body stays still.\n\nThe TV flickers back on. It shows your room. The same toys. The same glow.\n\nBut that isn’t your face in the reflection.",
+      "image": "mask_closeup.jpg",
+      "sound": "tv_static_screech.mp3",
+      "jumpscare": true,
+      "flavor": "Something wears your memory like a mask.",
+      "options": {}
     }
   }
 }
-
