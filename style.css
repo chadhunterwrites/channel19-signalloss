@@ -1,0 +1,32 @@
+body {
+  background-color: black;
+  color: #00ffcc;
+  font-family: 'Courier New', monospace;
+  padding: 20px;
+  margin: 0;
+  overflow: hidden;
+}
+
+#game-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: rgba(0, 0, 0, 0.75);
+  border: 2px solid #00ffcc;
+  padding: 20px;
+  box-shadow: 0 0 15px #00ffcc;
+}
+
+#game-output {
+  white-space: pre-wrap;
+  min-height: 300px;
+  margin-bottom: 20px;
+}
+
+#command-input {
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: #00ffcc;
+  border: 1px solid #00ffcc;
+  font-size: 16px;
+}
