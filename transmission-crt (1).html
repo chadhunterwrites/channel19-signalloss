@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Channel 19 CRT Frame</title>
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      font-family: monospace;
+    }
+    .crt-frame {
+      background-color: #111;
+      border: 12px solid #ff5500;
+      border-radius: 20px;
+      margin: 40px auto;
+      padding: 40px;
+      max-width: 900px;
+      box-shadow: 0 0 40px #ff5500;
+      position: relative;
+    }
+    .crt-screen {
+      background-color: black;
+      color: #ff5500;
+      font-size: clamp(16px, 2vw, 22px);
+      padding: 30px;
+      text-align: center;
+    }
+    .logo {
+      position: absolute;
+      top: -45px;
+      left: 20px;
+      height: 40px;
+    }
+    .mascot {
+      position: absolute;
+      bottom: -40px;
+      right: 30px;
+      opacity: 0.08;
+      height: 100px;
+    }
+    .button {
+      background-color: black;
+      border: 1px solid #ff5500;
+      color: #ff5500;
+      padding: 10px 20px;
+      font-size: clamp(14px, 1.8vw, 20px);
+      cursor: pointer;
+      margin: 10px;
+      display: inline-block;
+    }
+    .button:hover {
+      background-color: #331a00;
+    }
+  </style>
+</head>
+<body>
+  <div class="crt-frame">
+    <img src="logo.png" class="logo" alt="Saturday Mournings Logo" />
+    <div class="crt-screen">
+      <p><strong>[CHANNEL 19 — FILE 001: The Broadcast Wound Tapes]</strong></p>
+      <p>“...he’s back. I saw him in the hallway again. The mascot... wasn’t smiling this time.”</p>
+      <p>The tape ends with static and a single phrase scorched into the last frame:</p>
+      <p><em>“TUNE IN OR STAY ASLEEP.”</em></p>
+
+      <a href="inventory.html" class="button">Check Inventory</a>
+      <a href="use-item.html" class="button">Use Inventory Item</a>
+      <a href="use-ring.html" class="button">Use the Ring</a>
+      <a href="vault-entry-002.html" class="button">Access Vault Entry 002</a>
+      <a href="tv-off.html" class="button">Turn Off TV</a>
+      <a href="index.html" class="button">Return to Static</a>
+    </div>
+    <img src="mascot-silhouette.png" class="mascot" alt="Mascot shadow" />
+  </div>
+</body>
+</html>
