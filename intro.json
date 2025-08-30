@@ -1,9 +1,9 @@
 {
   "scenes": {
     "start": {
-      "text": "You wake up. 3:19AM.\n\nThe television is on. But you don’t own a TV.",
-      "reminder": "The TV crackles. Something glints in the static.",
-      "flavor": "It’s cold. Your memory itches, like something wants out.",
+      "text": "You wake up. 3:19AM.\n\nYour apartment is dark, but the television is on.\n\nYou don’t own a TV.",
+      "reminder": "A faint blue glow pulses from the corner. Something glints on the table.",
+      "flavor": "You feel watched… like something remembered you before you woke up.",
       "options": {
         "look": "sceneLook",
         "turn on tv": "sceneTV",
@@ -12,77 +12,58 @@
     },
 
     "sceneLook": {
-      "text": "Empty cereal boxes. VHS tapes. A decoder ring pulses on the table.",
-      "reminder": "The decoder ring wants to be used.",
-      "flavor": "The static flinches when you stare too long.",
-      "options": {
-        "use decoder ring": "sceneDecoderUnlock"
-      }
-    },
-
-    "sceneTV": {
-      "text": "The cartoon plays again. But this time, the mascot blinks.\n\nHe knows you’re watching.",
-      "image": "captain_chomp_glitch.jpg",
-      "sound": "glitch_burst.mp3",
-      "jumpscare": true,
-      "flavor": "You remember drawing him in 4th grade. But he didn’t move back then.",
-      "options": {
-        "keep watching": "sceneDecayTrigger1"
-      }
-    },
-
-    "scenePhone": {
-      "text": "You press play. The message stutters: \"Still in the Vault... don’t let him see you.\"",
-      "flavor": "The voice is familiar. You wish it wasn’t.",
+      "text": "Empty cereal boxes. A shoebox of childhood junk. A decoder ring rests atop it—still shining.\n\nThe static on the TV seems to react when you stare too long.",
+      "reminder": "The decoder ring pulses with a warmth you didn’t notice before.",
+      "flavor": "You remember this place. You just don’t remember how long it’s remembered you.",
       "options": {}
     },
 
     "sceneDecoderUnlock": {
-      "text": "You press the decoder ring to the cereal box. It unlocks. A tape slides out. Unlabeled.",
+      "text": "You grip the decoder ring. It vibrates in your hand. You press it against a cereal box.\n\nThe box clicks. Opens. Inside is a VHS tape. No label. No logo.",
       "image": "tape_unlabeled.png",
       "sound": "vhs_load.mp3",
-      "flavor": "The tape is warm. It breathes.\n\nThe static hisses. You broke something.",
+      "flavor": "The room feels colder. The static says your name.",
       "options": {
         "insert tape": "sceneTape"
       }
     },
 
     "sceneTape": {
-      "text": "You insert the tape.\n\nThe screen flickers: *We were never off air.*\n\nThen Buzzlehead. Too close.",
+      "text": "You insert the tape. It starts immediately.\n\nA voiceover: *\"We were never off air…\"*\n\nA cartoon mascot stares at the camera. \"Let’s try that again!\"",
       "image": "buzzlehead_face.jpg",
       "sound": "glitch_burst.mp3",
       "jumpscare": true,
-      "flavor": "He shouldn’t know your name.",
+      "flavor": "You’ve seen this episode before. But not from this side of the screen.",
       "options": {
         "stand up": "sceneFakeEnd"
       }
     },
 
     "sceneFakeEnd": {
-      "text": "Everything’s calm.\n\nYou stand. The screen is black.\n\nThen something knocks—\n—from the inside.",
+      "text": "You take a breath.\n\nThe static is gone. The screen is dark. You’re safe.\n\nYou’re awake.",
       "image": "tv_static_loop.jpg",
       "sound": "tape_rewind.mp3",
-      "flavor": "You smell burnt sugar. And copper.",
+      "flavor": "You can almost hear birds. Morning air. You haven’t felt that in years.",
       "options": {
         "stand up": "sceneTwist"
       }
     },
 
     "sceneTwist": {
-      "text": "You’re still seated.\n\nBut your body just stood up.\n\nThe TV shows your room.\n\nAnd Buzzlehead is in the reflection.",
-      "image": "buzzlehead_behind_you.jpg",
+      "text": "You stand.\n\nBut your body stays still.\n\nThe TV flickers back on. It shows your room. The same toys. The same glow.\n\nBut that isn’t your face in the reflection.",
+      "image": "mask_closeup.jpg",
       "sound": "tv_static_screech.mp3",
       "jumpscare": true,
-      "flavor": "You are not alone. Not anymore.",
+      "flavor": "Something wears your memory like a mask.",
       "options": {}
     },
 
     "sceneDecayTrigger1": {
-      "text": "The screen fractures. Text crawls backward.\n\nYou hear laughter. Too many mouths.\n\nThen—silence.",
-      "image": "glitch_rupture.jpg",
-      "sound": "buzzle_laugh.mp3",
+      "text": "The lights blink. The static hums louder.\n\nA voice rasps: *You're not supposed to be here yet...*",
+      "image": "buzzlehead_face.jpg",
+      "sound": "glitch_burst.mp3",
       "jumpscare": true,
-      "flavor": "The Vault opens wider. It remembers you.",
+      "flavor": "Your chest tightens. Like something inside the tape is watching back.",
       "options": {}
     }
   }
