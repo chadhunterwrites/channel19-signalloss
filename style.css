@@ -2,6 +2,7 @@ body {
   background: black;
   color: #ff4d00;
   font-family: 'Courier New', monospace;
+  font-size: 18px;
   padding: 2rem;
   margin: 0;
 }
@@ -10,13 +11,13 @@ body {
   border: 8px solid #ff4d00;
   box-shadow: 0 0 30px #ff4d00;
   padding: 2rem;
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   background: black;
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #00ffff;
 }
 
@@ -26,23 +27,30 @@ h1 {
 
 pre {
   white-space: pre-wrap;
-  line-height: 1.5;
+  line-height: 1.7;
   color: #ff4d00;
 }
 
 button {
-  display: block;
-  width: fit-content;
-  margin: 1rem 0;
+  margin: 0.5rem 0.5rem 0 0;
   padding: 0.5rem 1rem;
+  font-size: 1rem;
   background-color: transparent;
   color: #ff4d00;
   border: 2px solid #ff4d00;
   font-family: 'Courier New', monospace;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
   background-color: #ff4d00;
   color: black;
+}
+
+#options-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
