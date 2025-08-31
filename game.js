@@ -1,7 +1,7 @@
-// game.js — Saturday Mournings: Lost Signal (Phase 2)
+// game.js — Saturday Mournings: Lost Signal (Phase 2 - Button-Based UI)
 
 const output = document.getElementById("game-output");
-const input = document.getElementById("command-input");
+const buttonArea = document.getElementById("option-buttons");
 
 let currentScene = "start";
 let gameData = {};
@@ -10,6 +10,7 @@ let vaultDecay = 0;
 let eventFlags = {
   decoderUsed: false,
   tapeInserted: false,
+  decayTriggered: false
 };
 
 Promise.all([
@@ -26,87 +27,50 @@ Promise.all([
     console.error(err);
   });
 
-input.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    const command = input.value.trim().toLowerCase();
-    input.value = "";
-    processCommand(command);
-  }
-});
-
-function processCommand(cmd) {
-  appendOutput(`> ${cmd}`);
-
-  const scene = gameData.scenes[currentScene];
-  if (!scene) {
-    appendOutput("[ERROR] The scene is missing. Are you caught between signals?");
-    return;
-  }
-
-  const options = scene.options || {};
-  const matchedCommand = findMatchingCommand(cmd, options);
-
-  if (matchedCommand) {
-    const nextSceneKey = options[matchedCommand];
-    currentScene = nextSceneKey;
-    renderScene(currentScene);
-    return;
-  }
-
-  if (cmd.startsWith("use ")) {
-    const itemName = cmd.substring(4);
-    useItem(itemName);
-    return;
-  }
-
-  if (cmd === "look" || cmd === "look around") {
-    renderScene(currentScene, true);
-    vaultDecay++;
-    if (vaultDecay >= 3 && !eventFlags.decayTriggered) {
-      eventFlags.decayTriggered = true;
-      currentScene = "sceneDecayTrigger1";
-      renderScene(currentScene);
-    }
-    return;
-  }
-
-  if (cmd === "inventory") {
-    showInventory();
-    return;
-  }
-
-  appendOutput("The static crackles. That doesn't work... or it shouldn't.");
-  vaultDecay++;
-  if (vaultDecay >= 3 && !eventFlags.decayTriggered) {
-    eventFlags.decayTriggered = true;
-    currentScene = "sceneDecayTrigger1";
-    renderScene(currentScene);
-  }
-}
-
-function findMatchingCommand(cmd, options) {
-  const keys = Object.keys(options);
-  for (const key of keys) {
-    if (cmd === key) return key;
-    const cmdWords = cmd.split(" ");
-    const keyWords = key.split(" ");
-    if (keyWords.every(word => cmdWords.includes(word))) return key;
-  }
-  return null;
-}
-
-function renderScene(sceneKey, isReLook = false) {
+function renderScene(sceneKey) {
   const scene = gameData.scenes[sceneKey];
   if (!scene) {
     appendOutput("[ERROR: Scene not found. Something is wrong with the tape.]");
     return;
   }
-  if (!isReLook) {
-    handleSceneEffects(scene);
-  }
-  appendOutput("\n" + scene.text);
+
+  currentScene = sceneKey;
+  output.textContent = scene.text + "\n";
+
   if (scene.reminder) appendOutput(scene.reminder);
-  if (scene.flavor) appendOutput("\n[" + scene.flavor + "]");
+  if (scene.flavor) appendOutput("[" + scene.flavor + "]");
+
+  handleSceneEffects(scene);
+  renderButtons(scene.options);
+}
+
+function renderButtons(options) {
+  buttonArea.innerHTML = "";
+
+  const hasOptions = options && Object.keys(options).length > 0;
+  if (!hasOptions) return;
+
+  Object.entries(options).forEach(([label, target]) => {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.className = "option-btn";
+    btn.onclick = () => {
+      currentScene = target;
+      renderScene(target);
+    };
+    buttonArea.appendChild(btn);
+  });
+
+  // Inventory use button (if item has triggerScene)
+  inventory.forEach(item => {
+    if (item.triggerScene && !eventFlags[`${item.name.replace(/\s+/g, '')}Used`]) {
+      const btn = document.createElement("button");
+      btn.textContent = `Use ${item.name}`;
+      btn.className = "inventory-btn";
+      btn.onclick = () => useItem(item.name);
+      buttonArea.appendChild(btn);
+    }
+  });
 }
 
 function handleSceneEffects(scene) {
@@ -131,6 +95,10 @@ function playSound(filename) {
 function triggerJumpscare() {
   appendOutput("\n[⚠ JUMPSCARE ACTIVATED]");
   vaultDecay++;
+  if (vaultDecay >= 3 && !eventFlags.decayTriggered) {
+    eventFlags.decayTriggered = true;
+    renderScene("sceneDecayTrigger1");
+  }
 }
 
 function useItem(name) {
@@ -139,6 +107,7 @@ function useItem(name) {
     appendOutput("You don’t have that. Or maybe it’s lost…");
     return;
   }
+
   appendOutput(item.effect || "It buzzes in your hand, warm and wrong.");
   if (item.triggerScene) {
     currentScene = item.triggerScene;
@@ -146,15 +115,6 @@ function useItem(name) {
     if (item.name === "vhs tape") eventFlags.tapeInserted = true;
     renderScene(currentScene);
   }
-}
-
-function showInventory() {
-  if (inventory.length === 0) {
-    appendOutput("Your pockets are empty. Or maybe you forgot what was in them.");
-    return;
-  }
-  appendOutput("You carry:");
-  inventory.forEach(item => appendOutput("- " + item.name));
 }
 
 function appendOutput(text) {
