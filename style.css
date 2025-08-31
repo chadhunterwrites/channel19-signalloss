@@ -1,56 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 body {
-  background: black;
-  color: #ff4d00;
-  font-family: 'Courier New', monospace;
-  font-size: 18px;
-  padding: 2rem;
   margin: 0;
-}
-
-.crt-frame {
-  border: 8px solid #ff4d00;
-  box-shadow: 0 0 30px #ff4d00;
-  padding: 2rem;
-  max-width: 900px;
-  margin: auto;
-  background: black;
-}
-
-h1 {
-  font-size: 1.6rem;
-  color: #00ffff;
-}
-
-.orange {
-  color: #ff4d00;
-}
-
-pre {
-  white-space: pre-wrap;
-  line-height: 1.7;
-  color: #ff4d00;
-}
-
-button {
-  margin: 0.5rem 0.5rem 0 0;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: transparent;
-  color: #ff4d00;
-  border: 2px solid #ff4d00;
-  font-family: 'Courier New', monospace;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background-color: #ff4d00;
-  color: black;
-}
-
-#options-container {
-  margin-top: 1rem;
+  padding: 0;
+  background-color: #000000;
+  color: #ff6600;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 20px;
+  line-height: 1.5;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#game-container {
+  width: 90%;
+  max-width: 800px;
+  background-color: #111;
+  border: 3px solid #ff6600;
+  padding: 30px;
+  box-shadow: 0 0 20px #ff6600aa;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#game-output {
+  white-space: pre-wrap;
+  text-align: center;
+  margin-bottom: 30px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #000;
+  border: 2px dashed #ff6600;
+  border-radius: 8px;
+}
+
+.game-button {
+  background-color: transparent;
+  color: #ff6600;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 18px;
+  padding: 12px 20px;
+  margin: 10px 5px;
+  border: 2px solid #ff6600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.game-button:hover {
+  background-color: #ff6600;
+  color: #000;
+  transform: scale(1.05);
+}
+
+img.jumpscare {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100vw;
+  max-height: 100vh;
+  z-index: 999;
+  animation: flicker 0.2s alternate 5;
+  pointer-events: none;
+}
+
+@keyframes flicker {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.1;
+  }
 }
