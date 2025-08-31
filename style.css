@@ -1,91 +1,48 @@
-/* Global body styling */
 body {
-  background-color: black;
-  color: #00ffcc;
+  background: black;
+  color: #ff4d00;
   font-family: 'Courier New', monospace;
+  padding: 2rem;
   margin: 0;
-  padding: 0;
-  overflow: hidden;
 }
 
-/* CRT-style glow and layout */
-#game-container {
-  max-width: 760px;
-  margin: 40px auto;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid #00ffcc;
-  box-shadow: 0 0 25px #00ffcc;
-  filter: contrast(1.1) brightness(0.95);
-  animation: crtFlicker 1.5s infinite alternate;
+.crt-frame {
+  border: 8px solid #ff4d00;
+  box-shadow: 0 0 30px #ff4d00;
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  background: black;
 }
 
-/* Output window */
-#game-output {
+h1 {
+  font-size: 1.5rem;
+  color: #00ffff;
+}
+
+.orange {
+  color: #ff4d00;
+}
+
+pre {
   white-space: pre-wrap;
-  min-height: 300px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  line-height: 1.6;
-  text-shadow: 0 0 2px #00ffcc;
+  line-height: 1.5;
+  color: #ff4d00;
 }
 
-/* Input */
-#command-input {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  color: #00ffcc;
-  background-color: black;
-  border: 1px solid #00ffcc;
-  outline: none;
-  caret-color: #00ffcc;
+button {
+  display: block;
+  width: fit-content;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #ff4d00;
+  border: 2px solid #ff4d00;
   font-family: 'Courier New', monospace;
-  box-shadow: 0 0 5px #00ffcc;
+  cursor: pointer;
 }
 
-/* Jump scare effect */
-.jumpscare {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: 9999;
-  animation: flash 0.3s ease-in-out;
-}
-
-@keyframes flash {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
-}
-
-/* CRT flicker effect */
-@keyframes crtFlicker {
-  0% { opacity: 1; }
-  100% { opacity: 0.97; transform: scaleX(1.002) scaleY(0.998); }
-}
-
-/* Optional glitchy scanlines overlay (if desired) */
-body::before {
-  content: '';
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 255, 204, 0.03),
-    rgba(0, 255, 204, 0.03) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  pointer-events: none;
-  z-index: 999;
-  animation: glitchScan 0.5s linear infinite;
-}
-
-@keyframes glitchScan {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 2px; }
+button:hover {
+  background-color: #ff4d00;
+  color: black;
 }
