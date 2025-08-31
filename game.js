@@ -1,8 +1,7 @@
-// game.js — Saturday Mournings: Lost Signal (Phase 2)
+// game.js — Saturday Mournings: Lost Signal (Phase 2, Button Mode)
 
 const output = document.getElementById("game-output");
-const input = document.getElementById("command-input");
-const optionsContainer = document.getElementById("options-container");
+const buttonContainer = document.getElementById("button-container");
 
 let currentScene = "start";
 let gameData = {};
@@ -28,67 +27,6 @@ Promise.all([
     console.error(err);
   });
 
-function processCommand(cmd) {
-  appendOutput(`> ${cmd}`);
-
-  const scene = gameData.scenes[currentScene];
-  if (!scene) {
-    appendOutput("[ERROR] The scene is missing. Are you caught between signals?");
-    return;
-  }
-
-  const options = scene.options || {};
-  const matchedCommand = findMatchingCommand(cmd, options);
-
-  if (matchedCommand) {
-    const nextSceneKey = options[matchedCommand];
-    currentScene = nextSceneKey;
-    renderScene(currentScene);
-    return;
-  }
-
-  if (cmd.startsWith("use ")) {
-    const itemName = cmd.substring(4);
-    useItem(itemName);
-    return;
-  }
-
-  if (cmd === "look" || cmd === "look around") {
-    renderScene(currentScene, true);
-    vaultDecay++;
-    if (vaultDecay >= 3 && !eventFlags.decayTriggered) {
-      eventFlags.decayTriggered = true;
-      currentScene = "sceneDecayTrigger1";
-      renderScene(currentScene);
-    }
-    return;
-  }
-
-  if (cmd === "inventory") {
-    showInventory();
-    return;
-  }
-
-  appendOutput("The static crackles. That doesn't work... or it shouldn't.");
-  vaultDecay++;
-  if (vaultDecay >= 3 && !eventFlags.decayTriggered) {
-    eventFlags.decayTriggered = true;
-    currentScene = "sceneDecayTrigger1";
-    renderScene(currentScene);
-  }
-}
-
-function findMatchingCommand(cmd, options) {
-  const keys = Object.keys(options);
-  for (const key of keys) {
-    if (cmd === key) return key;
-    const cmdWords = cmd.split(" ");
-    const keyWords = key.split(" ");
-    if (keyWords.every(word => cmdWords.includes(word))) return key;
-  }
-  return null;
-}
-
 function renderScene(sceneKey, isReLook = false) {
   const scene = gameData.scenes[sceneKey];
   if (!scene) {
@@ -100,27 +38,37 @@ function renderScene(sceneKey, isReLook = false) {
     handleSceneEffects(scene);
   }
 
-  output.textContent = scene.text;
-  if (scene.reminder) appendOutput(scene.reminder);
-  if (scene.flavor) appendOutput("\n[" + scene.flavor + "]");
+  output.textContent = "";
+  buttonContainer.innerHTML = "";
 
-  renderOptions(scene.options);
+  appendOutput(scene.text);
+  if (scene.reminder) appendOutput(scene.reminder);
+  if (scene.flavor) appendOutput("[" + scene.flavor + "]");
+
+  const options = scene.options || {};
+  for (const [label, target] of Object.entries(options)) {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.classList.add("game-button");
+    btn.onclick = () => {
+      currentScene = target;
+      renderScene(currentScene);
+    };
+    buttonContainer.appendChild(btn);
+  }
+
+  if (scene.allowInventory) {
+    const invBtn = document.createElement("button");
+    invBtn.textContent = "Inventory";
+    invBtn.classList.add("game-button");
+    invBtn.onclick = showInventory;
+    buttonContainer.appendChild(invBtn);
+  }
 }
 
-function renderOptions(options) {
-  optionsContainer.innerHTML = "";
-  if (!options || Object.keys(options).length === 0) return;
-
-  Object.entries(options).forEach(([command, nextSceneKey]) => {
-    const button = document.createElement("button");
-    button.textContent = command;
-    button.classList.add("option-button");
-    button.addEventListener("click", () => {
-      currentScene = nextSceneKey;
-      renderScene(currentScene);
-    });
-    optionsContainer.appendChild(button);
-  });
+function appendOutput(text) {
+  output.textContent += "\n\n" + text;
+  output.scrollTop = output.scrollHeight;
 }
 
 function handleSceneEffects(scene) {
@@ -145,33 +93,14 @@ function playSound(filename) {
 function triggerJumpscare() {
   appendOutput("\n[⚠ JUMPSCARE ACTIVATED]");
   vaultDecay++;
-}
-
-function useItem(name) {
-  const item = inventory.find(i => i.name.toLowerCase() === name.toLowerCase());
-  if (!item) {
-    appendOutput("You don’t have that. Or maybe it’s lost…");
-    return;
-  }
-  appendOutput(item.effect || "It buzzes in your hand, warm and wrong.");
-  if (item.triggerScene) {
-    currentScene = item.triggerScene;
-    if (item.name === "decoder ring") eventFlags.decoderUsed = true;
-    if (item.name === "vhs tape") eventFlags.tapeInserted = true;
+  if (vaultDecay >= 3 && !eventFlags.decayTriggered) {
+    eventFlags.decayTriggered = true;
+    currentScene = "sceneDecayTrigger1";
     renderScene(currentScene);
   }
 }
 
 function showInventory() {
-  if (inventory.length === 0) {
-    appendOutput("Your pockets are empty. Or maybe you forgot what was in them.");
-    return;
-  }
   appendOutput("You carry:");
   inventory.forEach(item => appendOutput("- " + item.name));
-}
-
-function appendOutput(text) {
-  output.textContent += "\n" + text;
-  output.scrollTop = output.scrollHeight;
-}
+} 
