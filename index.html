@@ -1,22 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Channel 19 Signal Loss v.2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📺 Channel 19 Signal Loss</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="crt-border">
-    <div id="crt-screen">
-      <h1>📺 Channel 19 Signal Loss</h1>
-      <pre id="game-output">Initializing Channel 19...</pre>
-      <div id="options-container"></div>
-      <div id="input-container" style="display:none;">
-        <input type="text" id="command-input" placeholder="type a command..." autocomplete="off"/>
-      </div>
-    </div>
+  <div class="crt-frame">
+    <h1>📺 <span class="title">Channel 19 Signal Loss v.3</span></h1>
+    <pre id="game-output" class="output">Initializing Channel 19...</pre>
+    <div id="option-buttons" class="button-container"></div>
+    <input
+      id="command-input"
+      type="text"
+      placeholder="type a command..."
+      autocomplete="off"
+      class="hidden"
+    />
   </div>
 
   <script src="game.js"></script>
